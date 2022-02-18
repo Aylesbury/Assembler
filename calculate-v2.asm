@@ -208,7 +208,7 @@ gotoxy 0,2
 call pthis
 db 13,10, 'Increment: ', 0
 call print_num
-gotoxy 0,2
+gotoxy 0,1
 call pthis
 db 13,10, 'Input 1007 to exit the menu ', 0
 call scan_num
