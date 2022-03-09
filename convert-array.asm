@@ -44,20 +44,15 @@ input PROC
 call CLEAR_SCREEN
 call pthis
 db 13,10, 'Input any numbers (Max 10 numbers)', 0
-gotoxy 0, 1
-call pthis
-db 13,10, 'Input 1007 to invert and exit ', 0
+gotoxy 0, 2
+MOV DI, 0
 repll:
-MOV Cl, 3
-gotoxy 0, Cl
-ADD Cl, 1
 call scan_num
-CMP CX, 1007
-JE vvod
-MOV DI, 20
-sub DI, 2
-MOV ab[DI],AX
-jmp repll   
+add DI, 2
+MOV ab[DI],CX
+CMP DI, 20
+JZ vvod
+JNZ repll   
 input ENDP
 
 ; --------------------------
@@ -65,16 +60,20 @@ convert PROC
 call CLEAR_SCREEN
 call pthis
 db 13,10, 'Invert array:', 0
-MOV DI, 0
+MOV DI, 22
 MOV Cl, 1
 
 CONTINUE:
 ADD Cl, 1
-ADD DI, 2
-MOV AX, ab[dI]
+sub DI, 2
+MOV AX, ab[DI]
 gotoxy 0, Cl
 call print_num
-JMP CONTINUE
+
+CMP DI, 2
+JE pause
+JNE CONTINUE
+
 pause:
 call pthis
 db 13,10, 'Input 1007 to exit the menu ', 0
@@ -104,5 +103,3 @@ DEFINE_CLEAR_SCREEN
 DEFINE_PRINT_NUM
 DEFINE_PRINT_NUM_UNS
 END
-
-
